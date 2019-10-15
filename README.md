@@ -43,7 +43,7 @@ unzip -x consul_${VERSION}_linux_amd64.zip
 
 ### 运行剧本
 
-**1 基础设置(自己设置好也可以不执行这步)**
+**1 基础设置(自己设置好机器系统设置参数啥的也可以不执行这步)**
 
 ```
 ansible-playbook 01-setup.yml
