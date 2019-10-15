@@ -5,7 +5,7 @@
 
 
 ## 部署
-
+部署文档: https://zhangguanzhang.github.io/2019/09/27/consul-tls/
 部署信息，172.19.0.3上安装ansible
 
 | IP          | Hostname |  CPU  |  Memory |   role   | nodeName |
@@ -65,7 +65,6 @@ ansible-playbook 03-server.yml
 ```
 ansible-playbook 04-client.yml
 ```
-
 
 todo:
   - client这块可能后续会变动以及consul的配置部分，目前只是粗略看了下，没有细看
