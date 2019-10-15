@@ -12,6 +12,6 @@
 
 - block:
   - name: create tls file for {{ out_var.type }}
-    command: "{{ out_var.command }}"
+    command: "./{{ out_var.command }}"
     with_sequence: start=1 end={{ out_var.count|int - state.matched if state.matched < out_var.count|int else 1 }}
   when: state.matched < out_var.count|int
