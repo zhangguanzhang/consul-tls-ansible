@@ -6,7 +6,8 @@
 
 ## 部署
 部署文档: https://zhangguanzhang.github.io/2019/09/27/consul-tls/
-部署信息，172.19.0.3上安装ansible
+
+机器信息，172.19.0.3上安装ansible
 
 | IP          | Hostname |  CPU  |  Memory |   role   | nodeName |
 | :-----      |  :----:  |:----: |  :----: |  :----:  |  :----:  |
