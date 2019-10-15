@@ -1,0 +1,9 @@
+ansible_ssh_pass: 'zhangguanzhang'
+
+domain: consul
+dc: dc1
+conf_base_dir: /etc/consul.d
+https_port: 8501
+
+
+TimeZone: 'Asia/Shanghai'

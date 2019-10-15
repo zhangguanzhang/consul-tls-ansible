@@ -1,0 +1,5 @@
+tls_days: 36500
+
+ca_name: consul-agent-ca.pem
+ca_key_name: consul-agent-ca-key.pem
+

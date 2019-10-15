@@ -1,0 +1,9 @@
+domain: consul
+conf_base_dir: /etc/consul.d
+pathPrefix: "{{ role }}"
+data_dir: /var/lib/consul/{{ pathPrefix }}
+conf_dir: "{{ conf_base_dir }}/{{ pathPrefix }}"
+ssl_dir: "{{ conf_dir }}/ssl"
+
+https_port: 8501
+ui: false

@@ -1,0 +1,52 @@
+- name: populate service facts
+  service_facts:
+
+- name: create user for consul running
+  user:
+    name: consul
+    system: yes
+    home: "{{ conf_base_dir }}"
+    shell: /bin/false  
+  when: "'consul' not in services"
+- name: create the dir
+  file: name={{ item }} state=directory owner=consul group=consul
+  with_items:
+    - "{{ ssl_dir }}"
+    - "{{ data_dir }}"
+
+- name: copy the consul bin
+  copy: src=consul dest=/usr/local/bin/
+
+- name: set_fact for filename
+  set_fact: 
+    server_cert_index: "{{ '{0}'.format(play_hosts.index(inventory_hostname)) }}"
+
+- name: set name for consul cluster
+  set_fact:
+    clusterName: "{{ ansible_hostname }}"
+  when: clusterName is undefined
+
+- name: copy cert
+  #debug: msg={{ dc }}-{{ role }}-consul-{{ server_cert_index }}
+  copy: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: consul
+    group: consul
+    mode: '0660'
+  with_items:
+    - { src: "{{ dc }}-{{ role }}-consul-{{ server_cert_index }}-key.pem", dest: "{{ ssl_dir }}" }
+    - { src: "{{ dc }}-{{ role }}-consul-{{ server_cert_index }}.pem", dest: "{{ ssl_dir }}" }
+    - { src: "consul-agent-ca.pem", dest: "{{ conf_base_dir }}" }
+
+- name: create the file of the systemd service
+  template: src={{ item.src }} dest={{ item.dest }} owner={{ item.owner }} group={{ item.owner }}
+  with_items:
+    - { src: 'consul.service.j2', dest: "/usr/lib/systemd/system/consul.service", owner: 'root' }
+    - { src: '{{ role }}-conf.json.j2', dest: "{{ conf_dir + '/' + 'conf.json'}}", owner: 'consul' }
+
+  notify:
+    - restart consul
+
+
+- include_tasks: cli.yml

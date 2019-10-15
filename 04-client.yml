@@ -1,0 +1,7 @@
+---
+- hosts: client
+  vars:
+    role: client
+  gather_facts: no
+  roles:
+    - consul

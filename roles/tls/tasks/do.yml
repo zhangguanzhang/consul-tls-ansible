@@ -1,0 +1,17 @@
+#- debug: msg={{ out_var }}
+- name: Check if the file already exists
+  find: 
+    paths: .
+    file_type: file
+    use_regex: "{{ out_var.use_regex }}"
+    patterns:
+      - "{{ out_var.file_name_patterns }}"
+  register: state
+
+#- debug: msg={{state.matched}}-{{ out_var.file_name_patterns }}--{{out_var.count}}
+
+- block:
+  - name: create tls file for {{ out_var.type }}
+    command: "{{ out_var.command }}"
+    with_sequence: start=1 end={{ out_var.count|int - state.matched if state.matched < out_var.count|int else 1 }}
+  when: state.matched < out_var.count|int

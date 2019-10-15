@@ -1,0 +1,10 @@
+[server]
+172.19.0.3 bootstrap=true clusterName=172.19.0.3 hostname=consul1
+172.19.0.4 bootstrap=true clusterName=172.19.0.4 hostname=consul2
+172.19.0.5 bootstrap=true clusterName=172.19.0.5 hostname=consul3
+#172.19.0.6
+#172.19.0.7
+
+[client]
+172.19.0.8 clusterName=172.19.0.8 hostname=consul4
+172.19.0.9 clusterName=172.19.0.9 hostname=consul5

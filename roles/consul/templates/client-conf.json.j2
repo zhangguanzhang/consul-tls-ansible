@@ -1,0 +1,23 @@
+{
+    "data_dir": "{{ data_dir }}",
+    "node_name": "{{ clusterName }}",
+    "bind_addr": "0.0.0.0",
+    "datacenter": "{{ dc }}",
+    "log_level": "INFO",
+    "retry_join": [
+{% for host in groups['server'] %}        "{{ hostvars[host].inventory_hostname }}"{% if not loop.last %},{% endif %}
+
+{% endfor %}
+    ],
+    "rejoin_after_leave": true,
+    "enable_script_checks": true,
+    "verify_incoming": true,
+    "ca_file": "{{ conf_base_dir }}/consul-agent-ca.pem",
+    "cert_file": "{{ ssl_dir }}/{{ dc }}-{{ role }}-consul-{{ server_cert_index }}.pem",
+    "key_file": "{{ ssl_dir }}/{{ dc }}-{{ role }}-consul-{{ server_cert_index }}-key.pem",
+    "ports": {
+      "http": -1,
+      "https": {{ https_port }}
+    },
+    "ui": {{ ui | lower }}
+}

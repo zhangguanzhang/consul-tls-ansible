@@ -1,0 +1,24 @@
+- include_tasks: centos.yml
+  when: ansible_distribution == "CentOS" or ansible_distribution == "RedHat"
+
+- name: 设置系统时区
+  timezone:
+    name: "{{ TimeZone }}"
+  when: TimeZone is defined
+
+
+- name: 设置crond开机并启动
+  systemd: name=crond enabled=yes
+
+
+- name: 关闭sshd反向解析
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "^#UseDNS"
+    line: "UseDNS no"
+
+
+- name: 设置hostname
+  hostname: name={{ hostname }}
+  when: hostname is defined and hostname
+

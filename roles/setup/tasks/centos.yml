@@ -1,0 +1,37 @@
+- name: 关闭firewalld NetworkManager - CentOS
+  systemd: 
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
+  with_items:
+    - firewalld
+    - NetworkManager
+
+- name: 临时关闭 selinux
+  shell: "setenforce 0"
+  failed_when: false
+
+- name: 永久关闭 selinux
+  lineinfile:
+    dest: /etc/selinux/config
+    regexp: "^SELINUX="
+    line: "SELINUX=disabled"
+
+- name: 添加EPEL仓库
+  yum: name=epel-release state=latest update_cache=yes
+
+
+- name: 安装基础软件包
+  yum: 
+    name: 
+      - jq
+      - net-tools
+      - tcpdump
+      - telnet
+      - wget
+      - psmisc
+      - bash-completion
+    state: latest
+    update_cache: yes
+
+

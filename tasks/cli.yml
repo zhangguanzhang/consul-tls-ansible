@@ -1,0 +1,25 @@
+- set_fact:
+    cli_ssl_dir: "{{ conf_base_dir }}/cli/ssl"  
+- name: create cli directory
+  file: name={{ cli_ssl_dir }} state=directory
+- name: copy cli cert
+  copy: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - { src: "{{ dc }}-cli-consul-0-key.pem", dest: "{{ cli_ssl_dir }}" }
+    - { src: "{{ dc }}-cli-consul-0.pem", dest: "{{ cli_ssl_dir }}" }
+
+- name: Configuring the consul cli environment variable
+  template: src=consul-cli.sh.j2 dest=/etc/profile.d/consul-cli.sh
+
+- name: Check if it already exists
+  lineinfile:
+    name: $HOME/.bashrc
+    line: complete -C /usr/local/bin/consul consul
+  check_mode: yes
+  register: bashrc
+
+#- debug: msg={{ bashrc}}
+- name: auto completion consul cli
+  command: consul -autocomplete-install
+  when: bashrc is changed
+

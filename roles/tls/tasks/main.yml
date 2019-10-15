@@ -1,0 +1,8 @@
+- include_tasks: do.yml
+  loop_control:
+    loop_var: out_var
+  with_items:
+    - { type: "ca", file_name_patterns: 'consul-agent-ca.pem', use_regex: 'no', command: 'consul tls ca create -days={{ tls_days }}', count: 1 }
+    - { type: "cli", file_name_patterns: '{{ dc }}-cli-consul-0.pem', use_regex: 'no', command: 'consul tls cert create -cli -dc={{ dc }} -days={{ tls_days }}', count: 1 }
+    - { type: "server", file_name_patterns: '{{ dc }}-server-consul-[0-9]+\.pem', use_regex: 'yes', command: 'consul tls cert create -server -dc={{ dc }} -days={{ tls_days }}', count: "{{ groups['server'] | length }}" }
+    - { type: "client", file_name_patterns: '{{ dc }}-client-consul-[0-9]+\.pem', use_regex: 'yes', command: 'consul tls cert create -client -dc={{ dc }} -days={{ tls_days }}', count: "{{ groups['client'] | length }}" }

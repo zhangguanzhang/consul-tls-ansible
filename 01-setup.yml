@@ -1,0 +1,7 @@
+---
+- hosts: "{{ run | default('all')}}"
+  gather_facts: yes
+  roles:
+    - setup
+  tags:
+    - setup
