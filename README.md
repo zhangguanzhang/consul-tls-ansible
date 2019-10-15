@@ -66,5 +66,11 @@ ansible-playbook 03-server.yml
 ansible-playbook 04-client.yml
 ```
 
+**5 backup certs**
+```
+tar -zcvf cert.tar.gz *.pem
+```
+
 todo:
   - client这块可能后续会变动以及consul的配置部分，目前只是粗略看了下，没有细看
+  - 目前用来做内网dns转发，不需要依赖数据备份，有需要的话可以联系我，我添加备份剧本
