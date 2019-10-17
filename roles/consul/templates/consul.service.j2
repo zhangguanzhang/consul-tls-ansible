@@ -12,6 +12,7 @@ Group=consul
 EnvironmentFile=-/etc/sysconfig/consul
 PIDFile=/var/run/consul/consul.pid
 PermissionsStartOnly=true
+ExecStartPre=/usr/local/bin/consul validate {{ conf_dir }}
 ExecStart=/usr/local/bin/consul agent {% if role == 'server' %}-{{ role }}{% endif %} -config-dir={{ conf_dir }}
 ExecReload=/usr/local/bin/consul reload
 KillMode=process
