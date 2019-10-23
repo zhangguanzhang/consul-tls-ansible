@@ -1,7 +1,7 @@
 {
     "data_dir": "{{ data_dir }}",
     "node_name": "{{ clusterName }}",
-    "bind_addr": "0.0.0.0",
+    "bind_addr": "{{ inventory_hostname }}",
     "client_addr": "0.0.0.0",
     "datacenter": "{{ dc }}",
     "log_level": "INFO",

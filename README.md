@@ -59,12 +59,15 @@ ansible-playbook 02-tls.yml
 
 ```
 ansible-playbook 03-server.yml
+. /etc/profile.d/consul-cli.sh 
+consul members
 ```
 
 **4 consul client**
 
 ```
 ansible-playbook 04-client.yml
+consul members
 ```
 
 **5 backup certs**

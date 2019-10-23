@@ -6,6 +6,7 @@
 {%- endfor -%}
 {
     "data_dir": "{{ data_dir }}",
+    "bind_addr": "{{ inventory_hostname }}",
     "node_name": "{{ clusterName }}",
     "bootstrap_expect": {{ bootstrapList| length }},
     "client_addr": "0.0.0.0",
@@ -29,5 +30,7 @@
       "http": -1,
       "https": {{ https_port }}
     },
+{% if role == 'server' %}    "server": true,
+{% endif %}
     "ui": {{ ui | lower }}
 }
