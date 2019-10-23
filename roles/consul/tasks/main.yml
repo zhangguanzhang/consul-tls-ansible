@@ -15,7 +15,7 @@
     - "{{ data_dir }}"
 
 - name: copy the consul bin
-  copy: src=consul dest=/usr/local/bin/ mode=+x
+  copy: src=consul dest=/usr/local/bin/ mode='0755'
 
 - name: set_fact for filename
   set_fact: 
